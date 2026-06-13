@@ -14,8 +14,8 @@
 package meteordevelopment.meteorclient.gui.screens;
 
 import meteordevelopment.meteorclient.gui.GuiTheme;
+import meteordevelopment.meteorclient.gui.tabs.TabScreen;
 import meteordevelopment.meteorclient.gui.tabs.Tabs;
-import meteordevelopment.meteorclient.gui.tabs.WindowTabScreen;
 import meteordevelopment.meteorclient.gui.themes.onyix.widgets.WCategoryTab;
 import meteordevelopment.meteorclient.gui.themes.onyix.widgets.WModuleCard;
 import meteordevelopment.meteorclient.gui.themes.onyix.widgets.WModuleGrid;
@@ -30,7 +30,6 @@ import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ import java.util.List;
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class OnyixModulesScreen extends WindowTabScreen {
+public class OnyixModulesScreen extends TabScreen {
     private String searchFilter = "";
     private Category selectedCategory = null; // null = All
     private WTextBox searchTextBox;
@@ -55,19 +54,13 @@ public class OnyixModulesScreen extends WindowTabScreen {
         // Full-screen dark background
         WFullBackground bg = new WFullBackground();
         bg.theme = theme;
-        addDirect(bg);
-
-        // Remove default window chrome - we draw our own full-screen layout
-        window.padding = 0;
-        window.spacing = 0;
-        window.view.scrollOnlyWhenMouseOver = false;
-        window.view.hasScrollBar = false;
+        add(bg);
 
         // ── Main horizontal layout: sidebar | content ──────────────────────
         WHorizontalList mainLayout = add(theme.horizontalList()).expandX().expandWidgetY().widget();
         mainLayout.spacing = 0;
 
-        // ── Left Sidebar ───────────────────────────────────────────────────
+        // ── Left Sidebar ─────────────────────────────────────────────────────
         WVerticalList sidebar = mainLayout.add(theme.verticalList()).pad(0).widget();
         sidebar.spacing = 0;
 
@@ -100,7 +93,7 @@ public class OnyixModulesScreen extends WindowTabScreen {
         // Vertical separator
         mainLayout.add(theme.verticalSeparator());
 
-        // ── Right Panel ────────────────────────────────────────────────────
+        // ── Right Panel ──────────────────────────────────────────────────────
         WVerticalList rightPanel = mainLayout.add(theme.verticalList()).expandX().expandWidgetY().pad(0).widget();
         rightPanel.spacing = 0;
 
@@ -161,7 +154,7 @@ public class OnyixModulesScreen extends WindowTabScreen {
         scrollView.add(moduleGrid).expandX();
 
         // Bottom watermark
-        rightPanel.add(theme.label("Onyix Client  •  onyix.cc")).right().padRight(10).padBottom(4);
+        rightPanel.add(theme.label("Onyix Client  \u2022  onyix.cc")).right().padRight(10).padBottom(4);
 
         refreshModules();
     }
